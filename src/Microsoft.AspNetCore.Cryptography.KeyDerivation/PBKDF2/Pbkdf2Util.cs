@@ -20,15 +20,14 @@ namespace Microsoft.AspNetCore.Cryptography.KeyDerivation.PBKDF2
             {
                 // fastest implementation
                 return new Win8Pbkdf2Provider();
-            } else if (OSVersionUtil.IsWindows())
+            }
+			if (OSVersionUtil.IsWindows7OrLater())
             {
                 // acceptable implementation
                 return new Win7Pbkdf2Provider();
-            } else
-            {
-                // slowest implementation
-                return new ManagedPbkdf2Provider();
-            }
+            } 
+			// slowest implementation
+			return new ManagedPbkdf2Provider();
         }
     }
 }

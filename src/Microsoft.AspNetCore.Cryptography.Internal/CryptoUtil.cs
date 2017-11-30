@@ -34,7 +34,7 @@ namespace Microsoft.AspNetCore.Cryptography
         // Asserts that the current platform is Windows; throws PlatformNotSupportedException otherwise.
         public static void AssertPlatformIsWindows()
         {
-            if (!OSVersionUtil.IsWindows())
+            if (!OSVersionUtil.IsWindows7OrLater())
             {
                 throw new PlatformNotSupportedException(Resources.Platform_Windows7Required);
             }

@@ -32,11 +32,13 @@ namespace Microsoft.AspNetCore.Cryptography.Cng
                         // We're running on Win8+.
                         return OSVersion.Win8OrLater;
                     }
-                    else
+                    if (bcryptLibHandle.DoesProcExist("BCryptDeriveKeyPBKDF2"))
                     {
                         // We're running on Win7+.
                         return OSVersion.Win7OrLater;
                     }
+					// We're running on Vista+.
+					return OSVersion.WinVistaOrLater;
                 }
             }
             else
@@ -46,7 +48,12 @@ namespace Microsoft.AspNetCore.Cryptography.Cng
             }
         }
 
-        public static bool IsWindows()
+		public static bool IsWindows()
+        {
+            return (_osVersion >= OSVersion.WinVistaOrLater);
+        }
+		
+        public static bool IsWindows7OrLater()
         {
             return (_osVersion >= OSVersion.Win7OrLater);
         }
@@ -59,8 +66,9 @@ namespace Microsoft.AspNetCore.Cryptography.Cng
         private enum OSVersion
         {
             NotWindows = 0,
-            Win7OrLater = 1,
-            Win8OrLater = 2
+            WinVistaOrLater = 1,
+            Win7OrLater = 2,
+            Win8OrLater = 3
         }
     }
 }
